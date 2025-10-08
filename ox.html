@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>O-X Game (Tic Tac Toe)</title>
+  <style>
+    body {
+      background: #222;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    h1 {
+      color: #00eaff;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-gap: 10px;
+      justify-content: center;
+      margin: 30px auto;
+    }
+
+    .cell {
+      width: 100px;
+      height: 100px;
+      background-color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: background 0.3s;
+    }
+
+    .cell:hover {
+      background-color: #555;
+    }
+
+    #status {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #00eaff;
+      color: black;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #00c4cc;
+    }
+  </style>
+</head>
+<body>
+  <h1>O-X Game 🎮</h1>
+  <div class="board" id="board"></div>
+  <div id="status">Player X's turn</div>
+  <button onclick="resetGame()">Restart</button>
+
+  <script>
+    const board = document.getElementById("board");
+    const statusText = document.getElementById("status");
+    let cells = ["", "", "", "", "", "", "", "", ""];
+    let currentPlayer = "X";
+    let running = true;
+
+    // Create game board
+    for (let i = 0; i < 9; i++) {
+      const cell = document.createElement("div");
+      cell.classList.add("cell");
+      cell.dataset.index = i;
+      cell.addEventListener("click", cellClicked);
+      board.appendChild(cell);
+    }
+
+    function cellClicked() {
+      const index = this.dataset.index;
+      if (cells[index] !== "" || !running) return;
+      cells[index] = currentPlayer;
+      this.textContent = currentPlayer;
+
+      if (checkWinner()) {
+        statusText.textContent = `🎉 Player ${currentPlayer} Wins!`;
+        running = false;
+      } else if (!cells.includes("")) {
+        statusText.textContent = "It's a Draw!";
+        running = false;
+      } else {
+        currentPlayer = currentPlayer === "X" ? "O" : "X";
+        statusText.textContent = `Player ${currentPlayer}'s turn`;
+      }
+    }
+
+    function checkWinner() {
+      const winPatterns = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+      ];
+
+      return winPatterns.some(pattern =>
+        pattern.every(index => cells[index] === currentPlayer)
+      );
+    }
+
+    function resetGame() {
+      cells = ["", "", "", "", "", "", "", "", ""];
+      currentPlayer = "X";
+      running = true;
+      statusText.textContent = `Player X's turn`;
+      document.querySelectorAll(".cell").forEach(cell => cell.textContent = "");
+    }
+  </script>
+</body>
+</html>
+Gemini
+Summarize this email
+in more detail
+Delete messages
+Preview before deleting
+What can Gemini do
+in Gmail
+Sales pitch ideator
+Create compelling sales pitches that resonate with your audience and drive conversions.
+Outreach specialist
+Craft personalised messages to potential customers, build relationships and drive engagement.
+Copy creator
+Get help with writing branded content that appeals to your audience.
+Your Gems will appear across Workspace
+Gemini in Workspace can make mistakes, so double-check responses. Learn more
